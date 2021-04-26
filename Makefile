@@ -1,3 +1,9 @@
+ifndef INSTALLED_HOST_DIR
+INSTALLED.HOST.DIR=$(BASE.DIR)/installed.host
+else
+INSTALLED.HOST.DIR=$(INSTALLED_HOST_DIR)
+endif
+
 HASH := $(shell git rev-parse --short=10 HEAD)
 OS := $(shell uname)
 ARCH := $(shell uname -m)
@@ -10,7 +16,6 @@ SHELL := /bin/bash
 
 BASE.DIR=$(PWD)
 DOWNLOADS.DIR=$(BASE.DIR)/downloads
-INSTALLED.HOST.DIR=$(BASE.DIR)/installed.host
 INSTALLED.TARGET.DIR=$(BASE.DIR)/installed.target
 CMAKE.VERSION=3.14.5
 CMAKE.URL=https://github.com/Kitware/CMake/archive/v$(CMAKE.VERSION).tar.gz

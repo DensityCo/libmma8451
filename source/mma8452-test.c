@@ -21,7 +21,7 @@
  * This is a simple example of how to open and read from an
  * accelerometer using the libmma8451 library.
  */
-#include "mma8451.h"
+#include "mma8452.h"
 #include <stdio.h>
 #include <time.h>
 

@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "mma8451.h"
+#include "mma8452.h"
 #include <stdio.h>
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>

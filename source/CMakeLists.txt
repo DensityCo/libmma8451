@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(libmma8452)
 
-include_directories ("${PROJECT_SOURCE_DIR}/")
+include_directories ("${PROJECT_SOURCE_DIR}/source")
 link_directories(BEFORE ${CMAKE_PREFIX_PATH}/lib)
 include_directories(BEFORE ${CMAKE_PREFIX_PATH}/include)
 ADD_DEFINITIONS ( -DPQXX_HIDE_EXP_OPTIONAL )

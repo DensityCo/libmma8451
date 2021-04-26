@@ -22,17 +22,8 @@ CMAKE.URL=https://github.com/Kitware/CMake/archive/v$(CMAKE.VERSION).tar.gz
 CMAKE.DIR=$(DOWNLOADS.DIR)/CMake-$(CMAKE.VERSION)
 CMAKE.ARCHIVE=v$(CMAKE.VERSION).tar.gz
 CMAKE.BIN=$(INSTALLED.HOST.DIR)/bin/cmake
-GTEST.VERSION=1.8.1
-GTEST.ARCHIVE=release-$(GTEST.VERSION).tar.gz
-GTEST.URL=https://github.com/google/googletest/archive/$(GTEST.ARCHIVE)
-GTEST.DIR=$(DOWNLOADS.DIR)/googletest-release-1.8.1
-GTEST.BUILD=$(DOWNLOADS.DIR)/build.googletest
 SOURCE.DIR=$(BASE.DIR)/source
 BUILD.DIR=$(BASE.DIR)/build
-BETTERENUMS.VERSION=0.11.2
-BETTERENUMS.DIR=$(DOWNLOADS.DIR)/better-enums-$(BETTERENUMS.VERSION)
-BETTERENUMS.ARCHIVE=$(BETTERENUMS.VERSION).tar.gz
-BETTERENUMS.URL=https://github.com/aantron/better-enums/archive/$(BETTERENUMS.ARCHIVE)
 BIN.DIR=$(INSTALLED.HOST.DIR)/bin
 LIB.DIR=$(INSTALLED.HOST.DIR)/lib
 TESTS.BIN=$(BIN.DIR)/mma8451-test
@@ -41,27 +32,10 @@ LIBRARY.BUILD=$(DOWNLOADS.DIR)/build.library
 
 ci: clean bootstrap build
 
-bootstrap: submodule cmake gtest betterenums
+bootstrap: submodule cmake
 
 ctags: .FORCE
 	cd $(BASE.DIR) && ctags -R --exclude=.git --exclude=installed.host --exclude=downloads --exclude=documents --exclude=installed.target --exclude=documents  --exclude=build.*  .
-
-betterenums: .FORCE
-	mkdir -p $(DOWNLOADS.DIR) && cd $(DOWNLOADS.DIR) && wget $(BETTERENUMS.URL) && tar xf $(BETTERENUMS.ARCHIVE)
-	mkdir -p $(INSTALLED.HOST.DIR)/include
-	cp $(BETTERENUMS.DIR)/enum.h $(INSTALLED.HOST.DIR)/include
-
-gtest.fetch: .FORCE
-	mkdir -p $(DOWNLOADS.DIR)
-	cd $(DOWNLOADS.DIR) && wget $(GTEST.URL) && tar xf $(GTEST.ARCHIVE)
-
-gtest: gtest.fetch
-	rm -rf $(GTEST.BUILD)
-	mkdir -p $(GTEST.BUILD) && cd $(GTEST.BUILD) && $(CMAKE.BIN) -DCMAKE_INSTALL_PREFIX=$(INSTALLED.HOST.DIR) $(GTEST.DIR) && make -j$(J) install
-
-gtest.clean: .FORCE
-	rm -rf $(GTEST.BUILD)
-	rm -rf $(DOWNLOADS.DIR)/$(GTEST.ARCHIVE)
 
 build.clean: .FORCE
 	rm -rf $(LIBRARY.BUILD)

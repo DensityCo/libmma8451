@@ -21,7 +21,7 @@
  * This is the identifier the MMA8451 returns when asked for its MMA8451_REGISTER_WHO_AM_I
  * register.
  */
-#define MMA8451_ID 0x1A
+#define MMA8451_ID 0x2A
 /**
  * Constant for acceleration due to gravity.
  */

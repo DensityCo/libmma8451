@@ -5,11 +5,6 @@ ifeq ($(OS), Linux)
 J := $(bc -l << "2*$(shell nproc --all")
 endif
 
-ifeq ($(OS), Darwin)
-J := 8
-#J := $(shell system_profiler | awk '/Number of CPUs/ {print $$4}{next;}')
-endif
-
 $(info building with $(J) threads)
 SHELL := /bin/bash
 
@@ -26,7 +21,7 @@ SOURCE.DIR=$(BASE.DIR)/source
 BUILD.DIR=$(BASE.DIR)/build
 BIN.DIR=$(INSTALLED.HOST.DIR)/bin
 LIB.DIR=$(INSTALLED.HOST.DIR)/lib
-TESTS.BIN=$(BIN.DIR)/mma8451-test
+TESTS.BIN=$(BIN.DIR)/mma8452-test
 LIBRARY.DIR=$(BASE.DIR)/source
 LIBRARY.BUILD=$(DOWNLOADS.DIR)/build.library
 
@@ -52,10 +47,6 @@ tests.run: .FORCE
 tests.gdb: .FORCE
 	LD_LIBRARY_PATH=$(LIB.DIR) gdb $(TESTS.BIN)
 
-submodule: .FORCE
-	git submodule init
-	git submodule update
-
 cmake.fetch: .FORCE
 	mkdir -p $(DOWNLOADS.DIR)
 	cd $(DOWNLOADS.DIR) && wget $(CMAKE.URL) && cd $(DOWNLOADS.DIR) &&  tar xf $(CMAKE.ARCHIVE)
@@ -70,6 +61,5 @@ cmake.clean: .FORCE
 clean: .FORCE
 	rm -rf $(INSTALLED.HOST.DIR)
 	rm -rf $(DOWNLOADS.DIR)
-	rm -rf $(TESTS.BUILD)
 
 .FORCE:

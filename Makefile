@@ -27,7 +27,7 @@ LIBRARY.BUILD=$(DOWNLOADS.DIR)/build.library
 
 ci: clean bootstrap build
 
-bootstrap: submodule cmake
+bootstrap: cmake
 
 ctags: .FORCE
 	cd $(BASE.DIR) && ctags -R --exclude=.git --exclude=installed.host --exclude=downloads --exclude=documents --exclude=installed.target --exclude=documents  --exclude=build.*  .

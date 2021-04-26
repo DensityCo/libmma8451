@@ -35,9 +35,9 @@ BETTERENUMS.ARCHIVE=$(BETTERENUMS.VERSION).tar.gz
 BETTERENUMS.URL=https://github.com/aantron/better-enums/archive/$(BETTERENUMS.ARCHIVE)
 BIN.DIR=$(INSTALLED.HOST.DIR)/bin
 LIB.DIR=$(INSTALLED.HOST.DIR)/lib
-TESTS.BIN=$(BIN.DIR)/tests
-TESTS.DIR=$(BASE.DIR)/tests
-TESTS.BUILD=$(BASE.DIR)/build.tests
+TESTS.BIN=$(BIN.DIR)/mma8451-test
+LIBRARY.DIR=$(BASE.DIR)/source
+LIBRARY.BUILD=$(DOWNLOADS.DIR)/build.library
 
 ci: clean bootstrap
 
@@ -63,20 +63,20 @@ gtest.clean: .FORCE
 	rm -rf $(GTEST.BUILD)
 	rm -rf $(DOWNLOADS.DIR)/$(GTEST.ARCHIVE)
 
-tests.build: .FORCE
-	mkdir -p $(TESTS.BUILD)
-	cd $(TESTS.BUILD) && $(CMAKE.BIN) -DCMAKE_PREFIX_PATH=$(INSTALLED.HOST.DIR) -DCMAKE_INSTALL_PREFIX=$(INSTALLED.HOST.DIR) $(TESTS.DIR) && make install
+build.clean: .FORCE
+	rm -rf $(LIBRARY.BUILD)
+
+build: build.clean
+	mkdir -p $(LIBRARY.BUILD)
+	cd $(LIBRARY.BUILD) && $(CMAKE.BIN) -DCMAKE_PREFIX_PATH=$(INSTALLED.HOST.DIR) -DCMAKE_INSTALL_PREFIX=$(INSTALLED.HOST.DIR) $(LIBRARY.DIR) && make $(J) install
+
+tests: tests.run
 
 tests.run: .FORCE
 	LD_LIBRARY_PATH=$(LIB.DIR) $(TESTS.BIN)
 
 tests.gdb: .FORCE
 	LD_LIBRARY_PATH=$(LIB.DIR) gdb $(TESTS.BIN)
-
-tests.clean: .FORCE
-	rm -rf $(TESTS.BUILD)
-
-tests: tests.clean tests.build tests.run
 
 submodule: .FORCE
 	git submodule init
@@ -87,13 +87,13 @@ cmake.fetch: .FORCE
 	cd $(DOWNLOADS.DIR) && wget $(CMAKE.URL) && cd $(DOWNLOADS.DIR) &&  tar xf $(CMAKE.ARCHIVE)
 
 cmake: cmake.clean cmake.fetch
-	cd $(CMAKE.DIR) && ./configure --prefix=$(INSTALLED.HOST.DIR) --no-system-zlib --parallel=8  && make -j4 install
+	cd $(CMAKE.DIR) && ./configure --prefix=$(INSTALLED.HOST.DIR) --no-system-zlib --parallel=$(J)  && make -j$(J) install
 
 cmake.clean: .FORCE
 	rm -f $(DOWNLOADS.DIR)/$(CMAKE.ARCHIVE)
 	rm -rf $(CMAKE.DIR)
 
-clean: cmake.clean library.clean
+clean: .FORCE
 	rm -rf $(INSTALLED.HOST.DIR)
 	rm -rf $(DOWNLOADS.DIR)
 	rm -rf $(TESTS.BUILD)

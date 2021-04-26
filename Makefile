@@ -39,7 +39,7 @@ TESTS.BIN=$(BIN.DIR)/mma8451-test
 LIBRARY.DIR=$(BASE.DIR)/source
 LIBRARY.BUILD=$(DOWNLOADS.DIR)/build.library
 
-ci: clean bootstrap
+ci: clean bootstrap build
 
 bootstrap: submodule cmake gtest betterenums
 

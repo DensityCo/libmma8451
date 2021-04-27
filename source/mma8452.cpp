@@ -311,16 +311,16 @@ int mma8451_get_f_setup(mma8451* device, mma8451_register_f_setup* data) {
     data->f_wmrk +=  data->f_wmrk0;
     return 1;
 }
-int mma8451_set_f_setup(mma8451* device, mma8451_register_f_setup* data) {
-    data->f_mode1 = (data->f_mode >> 1) & 0x1;
-    data->f_mode0 = data->f_mode & 0x1;
+int mma8451_set_f_setup(mma8451 &device, mma8451_register_f_setup* data) {
+    data.f_mode1 = (data->f_mode >> 1) & 0x1;
+    data.f_mode0 = data->f_mode & 0x1;
 
-    data->f_wmrk5 = (data->f_wmrk >> 5) & 0x1;
-    data->f_wmrk4 = (data->f_wmrk >> 4) & 0x1;
-    data->f_wmrk3 = (data->f_wmrk >> 3) & 0x1;
-    data->f_wmrk2 = (data->f_wmrk >> 2) & 0x1;
-    data->f_wmrk1 = (data->f_wmrk >> 1) & 0x1;
-    data->f_wmrk0 = data->f_wmrk & 0x1;
+    data.f_wmrk5 = (data->f_wmrk >> 5) & 0x1;
+    data.f_wmrk4 = (data->f_wmrk >> 4) & 0x1;
+    data.f_wmrk3 = (data->f_wmrk >> 3) & 0x1;
+    data.f_wmrk2 = (data->f_wmrk >> 2) & 0x1;
+    data.f_wmrk1 = (data->f_wmrk >> 1) & 0x1;
+    data.f_wmrk0 = data->f_wmrk & 0x1;
 
     if(!mma8451_set_register(device, MMA8451_REGISTER_F_SETUP, (mma8451_register_generic*)data, 0)) {
         return 0;

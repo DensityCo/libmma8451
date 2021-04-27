@@ -10,8 +10,8 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -O0")
 set(CMAKE_CXX_FLAGS_DEBUG "-std=c++11 -O0 -g")
 
-add_library(mma8452 SHARED mma8452.c)
-add_executable(mma8452-test mma8452-test.c)
+add_library(mma8452 SHARED mma8452.cpp)
+add_executable(mma8452-test mma8452-test.cpp)
 
 target_link_libraries(mma8452-test mma8452)
 install(TARGETS mma8452 DESTINATION lib)

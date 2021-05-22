@@ -28,7 +28,7 @@
 #include <errno.h>
 #include <string.h>
 
-mma8451* mma8451_open(char* path, unsigned char addr) {
+mma8451* mma8451_open(const char* path, unsigned char addr) {
     mma8451* dev = (mma8451*)calloc(1, sizeof(mma8451));
     unsigned char whoami;
 

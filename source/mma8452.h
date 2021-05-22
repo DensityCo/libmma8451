@@ -1345,7 +1345,7 @@ typedef struct mma8451 {
  * @param addr the I2C address of the device.
  * @return Either a MMA8451 structure or NULL if there was an error.
  */
-mma8451* mma8451_open(char* path, unsigned char addr);
+mma8451* mma8451_open(const char* path, unsigned char addr);
 /**
  * This function closes an open reference to an MMA8451 accelerometer.
  * @param device Device to close, also cleans up memory.
